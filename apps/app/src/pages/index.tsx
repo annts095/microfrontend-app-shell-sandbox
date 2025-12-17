@@ -1,18 +1,8 @@
 import Head from "next/head";
 import { useState } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Header, Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
-import styles from "@/styles/Home.module.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Layout from "@/components/Layout";
+import styles from "@/components/Layout/index.module.css";
 
 export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -28,9 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
+      <Layout>
         <Header title="Home" />
         <main className={styles.main}>
           <div className={styles.intro}>
@@ -49,7 +37,7 @@ export default function Home() {
           <h2 id="drawer-title">Drawer</h2>
           <p>ここにDrawerのコンテンツを配置できます。</p>
         </Drawer>
-      </div>
+      </Layout>
     </>
   );
 }

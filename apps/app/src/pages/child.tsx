@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Header } from "@microfrontend-app-shell-sandbox/ui";
-import styles from "@/styles/Home.module.css";
+import Layout from "@/components/Layout";
+import styles from "@/components/Layout/index.module.css";
 
 export default function Child() {
   return (
@@ -11,7 +12,7 @@ export default function Child() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.page}>
+      <Layout>
         <Header title="Child Page" />
         <main className={styles.main}>
           <div className={styles.intro}>
@@ -19,8 +20,7 @@ export default function Child() {
             <p>This is a child page.</p>
           </div>
         </main>
-      </div>
+      </Layout>
     </>
   );
 }
-
