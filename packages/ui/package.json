@@ -1,10 +1,34 @@
 {
-  "name": "@microfrontend-app-shell-sandbox/ui",
+  "name": "@annts095/microfrontend-sandbox-ui",
   "version": "0.1.0",
-  "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "description": "UI components library for microfrontend app shell",
+  "private": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/annts095/microfrontend-app-shell-sandbox.git",
+    "directory": "packages/ui"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json && pnpm run copy-assets",
+    "copy-assets": "mkdir -p dist/components && cp -r src/components/*.css dist/components/ 2>/dev/null || true",
+    "prepublishOnly": "pnpm run build",
     "lint": "eslint"
   },
   "peerDependencies": {
@@ -18,4 +42,3 @@
     "typescript": "^5"
   }
 }
-

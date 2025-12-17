@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "pnpm --filter app dev",
     "build": "pnpm --filter app build",
+    "build:ui": "pnpm --filter @annts095/microfrontend-sandbox-ui build",
+    "publish:ui": "pnpm --filter @annts095/microfrontend-sandbox-ui publish",
     "start": "pnpm --filter app start",
     "lint": "pnpm --filter app lint"
   }
