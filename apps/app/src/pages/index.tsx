@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import { Header, Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
+import { Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
 import Layout from "@/components/Layout";
 import styles from "@/components/Layout/index.module.css";
 
@@ -18,8 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Header title="Home" />
+      <Layout title="Home">
         <main className={styles.main}>
           <div className={styles.intro}>
             <h1>マイクロフロントエンドのアプリケーションシェル</h1>
