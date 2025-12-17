@@ -1,0 +1,90 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: var(--background);
+  z-index: 1000;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+.drawer.left {
+  left: 0;
+  animation-name: slideInLeft;
+}
+
+.drawer.right {
+  right: 0;
+  animation-name: slideInRight;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.content {
+  padding: 1.5rem;
+  height: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .drawer {
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .drawer.right {
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (max-width: 768px) {
+  .drawer {
+    width: 80vw !important;
+    max-width: 300px;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}
+
