@@ -1,8 +1,12 @@
 import Head from "next/head";
+import { useState } from "react";
+import { Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
 import Layout from "@/components/Layout";
 import styles from "@/components/Layout/index.module.css";
 
 export default function Child() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <>
       <Head>
@@ -17,7 +21,16 @@ export default function Child() {
             <h1>Child Page</h1>
             <p>This is a child page.</p>
           </div>
+          <div className={styles.ctas}>
+            <Button variant="primary" onClick={() => setIsDrawerOpen(true)}>
+              Drawerを開く
+            </Button>
+          </div>
         </main>
+        <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+          <h2 id="drawer-title">Drawer</h2>
+          <p>ここにDrawerのコンテンツを配置できます。</p>
+        </Drawer>
       </Layout>
     </>
   );
