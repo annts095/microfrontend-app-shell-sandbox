@@ -1,11 +1,13 @@
 import Head from "next/head";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
 import Layout from "@/components/Layout";
 import styles from "@/components/Layout/index.module.css";
 
 export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -29,6 +31,9 @@ export default function Home() {
           <div className={styles.ctas}>
             <Button variant="primary" onClick={() => setIsDrawerOpen(true)}>
               Drawerを開く
+            </Button>
+            <Button variant="secondary" onClick={() => router.push("/child")}>
+              Child Pageへ
             </Button>
           </div>
         </main>
