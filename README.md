@@ -1,40 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Microfrontend App Shell Sandbox
 
-## Getting Started
+マイクロフロントエンドアーキテクチャのアプリシェルサンドボックスプロジェクトです。pnpm workspaceを使用したmonorepo構成で、Next.jsアプリケーションと共有UIコンポーネントライブラリを含みます。
 
-First, install dependencies:
+## プロジェクト構造
+
+```
+microfrontend-app-shell-sandbox/
+├── apps/
+│   └── app/              # Next.jsアプリケーション（アプリシェル）
+└── packages/
+    └── ui/               # 共有UIコンポーネントライブラリ
+```
+
+## 技術スタック
+
+- **フレームワーク**: Next.js 16 (Pages Router)
+- **言語**: TypeScript
+- **パッケージマネージャー**: pnpm 9.0.0
+- **モノレポ**: pnpm workspace
+- **UIライブラリ**: React 19
+
+## セットアップ
+
+### 依存関係のインストール
 
 ```bash
 pnpm install
 ```
 
-Then, run the development server:
+### 開発サーバーの起動
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+アプリケーションは [http://localhost:4000](http://localhost:4000) で起動します。
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 利用可能なスクリプト
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### ルートレベル
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- `pnpm dev` - 開発サーバーを起動
+- `pnpm build` - アプリケーションをビルド
+- `pnpm build:ui` - UIパッケージをビルド
+- `pnpm publish:ui` - UIパッケージを公開
+- `pnpm start` - 本番モードでアプリケーションを起動
+- `pnpm lint` - リンターを実行
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## パッケージ
 
-## Learn More
+### `apps/app`
 
-To learn more about Next.js, take a look at the following resources:
+Next.jsアプリケーション（アプリシェル）。ポート4000で実行されます。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- 開発サーバー: `pnpm --filter app dev`
+- ビルド: `pnpm --filter app build`
+- 本番起動: `pnpm --filter app start`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### `packages/ui`
 
-## Deploy on Vercel
+共有UIコンポーネントライブラリ。GitHub Packagesに公開されます。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+パッケージページ: [@annts095/microfrontend-sandbox-ui](https://github.com/annts095/microfrontend-app-shell-sandbox/pkgs/npm/microfrontend-sandbox-ui)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- ビルド: `pnpm --filter @annts095/microfrontend-sandbox-ui build`
+- 公開: `pnpm --filter @annts095/microfrontend-sandbox-ui publish`
+
+
+
+## 開発
+
+### ページの編集
+
+メインページは `apps/app/src/pages/index.tsx` で編集できます。ファイルを保存すると自動的に更新されます。
+
+### APIルート
+
+[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) は `apps/app/src/pages/api/` ディレクトリに配置します。
+
+例: [http://localhost:4000/api/hello](http://localhost:4000/api/hello) は `apps/app/src/pages/api/hello.ts` で編集できます。
+
+### UIコンポーネントの使用
+
+アプリケーション内で共有UIコンポーネントを使用する例:
+
+```typescript
+import { Header } from "@microfrontend-app-shell-sandbox/ui";
+```

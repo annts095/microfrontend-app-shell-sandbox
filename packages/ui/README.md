@@ -46,3 +46,65 @@ A header component with navigation link and title.
 <Header title="Page Title" />
 ```
 
+## Publishing
+
+### Prerequisites
+
+1. **Create a GitHub Personal Access Token (PAT)**
+   - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+   - Click "Generate new token (classic)"
+   - Grant the following permissions:
+     - `write:packages` (to publish packages)
+     - `read:packages` (to read packages)
+   - Generate and copy the token
+
+2. **Set the GITHUB_TOKEN environment variable**
+
+   **Temporary (current session only):**
+   ```bash
+   export GITHUB_TOKEN=your_github_token_here
+   ```
+
+   **Permanent (recommended):**
+   ```bash
+   echo 'export GITHUB_TOKEN=your_github_token_here' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+### Build and Publish
+
+**From the root directory:**
+```bash
+# Build the package
+pnpm build:ui
+
+# Publish to GitHub Packages
+pnpm publish:ui
+```
+
+**Or from the packages/ui directory:**
+```bash
+cd packages/ui
+
+# Build the package
+pnpm build
+
+# Publish to GitHub Packages
+pnpm publish
+```
+
+### Version Management
+
+To update the version before publishing:
+```bash
+cd packages/ui
+npm version patch  # 0.1.0 → 0.1.1
+npm version minor  # 0.1.0 → 0.2.0
+npm version major  # 0.1.0 → 1.0.0
+```
+
+Then publish:
+```bash
+pnpm publish:ui
+```
+
