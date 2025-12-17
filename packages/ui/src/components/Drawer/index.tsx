@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import styles from "./index.module.css";
+import Button from "../Button";
 
 interface DrawerProps {
   isOpen: boolean;
@@ -16,6 +18,12 @@ export default function Drawer({
   position = "left",
   width = "300px",
 }: DrawerProps) {
+  const router = useRouter();
+
+  const handleHomeClick = () => {
+    router.push("/");
+    onClose();
+  };
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -32,11 +40,7 @@ export default function Drawer({
 
   return (
     <>
-      <div
-        className={styles.overlay}
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
       <div
         className={`${styles.drawer} ${styles[position]}`}
         style={{ width }}
@@ -44,9 +48,15 @@ export default function Drawer({
         aria-modal="true"
         aria-labelledby="drawer-title"
       >
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>
+          <div className={styles.homeButtonContainer}>
+            <Button variant="primary" onClick={handleHomeClick}>
+              ホームへ
+            </Button>
+          </div>
+          {children}
+        </div>
       </div>
     </>
   );
 }
-
