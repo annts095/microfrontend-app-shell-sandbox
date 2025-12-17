@@ -1,0 +1,66 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 128px;
+  border: 1px solid transparent;
+  transition: 0.2s;
+  cursor: pointer;
+  width: fit-content;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  background: var(--text-primary, #000);
+  color: var(--background, #fff);
+}
+
+.button.secondary {
+  background: transparent;
+  border-color: var(--button-secondary-border, #ebebeb);
+  color: var(--text-primary, #000);
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .button.primary:hover:not(:disabled) {
+    background: var(--button-primary-hover, #383838);
+    border-color: transparent;
+  }
+
+  .button.secondary:hover:not(:disabled) {
+    background: var(--button-secondary-hover, #f2f2f2);
+    border-color: transparent;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .button.primary {
+    background: var(--text-primary, #ededed);
+    color: var(--background, #000);
+  }
+
+  .button.secondary {
+    border-color: var(--button-secondary-border, #1a1a1a);
+    color: var(--text-primary, #ededed);
+  }
+
+  .button.primary:hover:not(:disabled) {
+    background: var(--button-primary-hover, #ccc);
+  }
+
+  .button.secondary:hover:not(:disabled) {
+    background: var(--button-secondary-hover, #1a1a1a);
+  }
+}
+
