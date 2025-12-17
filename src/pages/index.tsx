@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+import Header from "@/components/Header";
 import styles from "@/styles/Home.module.css";
 
 const geistSans = Geist({
@@ -25,6 +26,7 @@ export default function Home() {
       <div
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
+        <Header title="Home" />
         <main className={styles.main}>
           <Image
             className={styles.logo}
