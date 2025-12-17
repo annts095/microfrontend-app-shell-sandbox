@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import { Drawer, Button } from "@microfrontend-app-shell-sandbox/ui";
+import { Drawer, Button } from "@annts095/microfrontend-sandbox-ui";
 import Layout from "@/components/Layout";
 import styles from "@/components/Layout/index.module.css";
 

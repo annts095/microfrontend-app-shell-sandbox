@@ -3,16 +3,16 @@
   "version": "0.1.1",
   "description": "UI components library for microfrontend app shell",
   "private": false,
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
   "exports": {
     ".": {
       "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
@@ -29,7 +29,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && pnpm run copy-assets",
+    "build": "tsup && pnpm run copy-assets",
     "copy-assets": "find src/components -name '*.css' | while read file; do dest=\"dist/$(echo \"$file\" | sed 's|^src/||')\"; mkdir -p \"$(dirname \"$dest\")\"; cp \"$file\" \"$dest\"; done",
     "prepublishOnly": "pnpm run build",
     "lint": "eslint"
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "tsup": "^8",
     "typescript": "^5"
   }
 }

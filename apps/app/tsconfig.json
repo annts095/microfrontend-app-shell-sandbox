@@ -15,7 +15,7 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@microfrontend-app-shell-sandbox/ui": ["../../packages/ui/src"]
+      "@annts095/microfrontend-sandbox-ui": ["../../packages/ui/src"]
     }
   },
   "include": [
