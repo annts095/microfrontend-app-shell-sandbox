@@ -14,10 +14,12 @@ export default defineConfig({
       js: format === 'cjs' ? '.cjs' : '.js',
     };
   },
+  // CSSファイルをバンドルに含めない（Next.jsが処理する）
+  // CSS ModulesはNext.jsが実行時に処理するため、ここでは空オブジェクトとして扱う
   esbuildOptions(options) {
     options.loader = {
       ...options.loader,
-      '.css': 'copy',
+      '.css': 'empty',
     };
   },
 });
