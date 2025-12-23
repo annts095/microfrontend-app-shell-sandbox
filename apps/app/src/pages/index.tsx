@@ -35,6 +35,12 @@ export default function Home() {
             <Button variant="secondary" onClick={() => router.push("/child")}>
               Child Pageへ
             </Button>
+            <Button
+              variant="secondary"
+              onClick={() => router.push("/next-qiankun")}
+            >
+              Qiankun Next.js
+            </Button>
           </div>
         </main>
         <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
