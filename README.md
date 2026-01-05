@@ -87,3 +87,50 @@ Next.jsアプリケーション（アプリシェル）。ポート4000で実行
 ```typescript
 import { Header } from "@microfrontend-app-shell-sandbox/ui";
 ```
+
+## qiankunとの統合
+
+このプロジェクトでは、qiankunを使用してNext.jsアプリケーションをマイクロフロントエンドとして統合しています。
+
+### 既知の問題と解決策
+
+#### 問題: `Cannot read properties of null (reading 'getAttribute')` エラー
+
+qiankunがリモートNext.jsアプリケーションのスクリプトを`eval`で実行する際、スクリプトタグがDOMに存在しないため、Next.jsのwebpackチャンクローダー（`getPathFromScript`関数）がエラーを発生させます。
+
+**原因:**
+- Next.jsの`registerChunk`関数は、スクリプトタグからチャンクのパスを取得するために`getPathFromScript`を呼び出します
+- qiankunはスクリプトを`eval`で実行するため、スクリプトタグがDOMに存在しません
+- その結果、`getPathFromScript`が`null`を受け取り、`getAttribute`を呼び出そうとしてエラーが発生します
+
+**解決策:**
+
+`apps/app/src/pages/_document.tsx`でグローバルエラーハンドラーを設定しています。このエラーハンドラーは、Next.jsのエラーオーバーレイが表示される前に実行される必要があるため、`_document.tsx`の`dangerouslySetInnerHTML`で設定しています。
+
+```typescript
+// apps/app/src/pages/_document.tsx
+<script
+  dangerouslySetInnerHTML={{
+    __html: `
+      (function() {
+        // getPathFromScript関数のエラーを抑制
+        // 実行タイミングが重要: Next.jsのエラーオーバーレイが表示される前に設定する必要がある
+        if (typeof window !== 'undefined') {
+          // エラーハンドラーの設定...
+        }
+      })();
+    `,
+  }}
+/>
+```
+
+**なぜ`_document.tsx`に書くのか:**
+- `_app.tsx`の`useEffect`では実行タイミングが遅く、エラーが発生してからエラーハンドラーが設定される
+- `_document.tsx`の`dangerouslySetInnerHTML`は、HTMLの解析時に実行されるため、Next.jsのスクリプトが読み込まれる前にエラーハンドラーが設定される
+- これは、Google Analyticsなどのスクリプトを`_document.tsx`に追加するのと同じパターンです
+
+**注意:**
+- このエラーは、アプリケーションの実行には影響しません（`registerChunk`はチャンクの登録を行うだけで、アプリケーションの実行には直接影響しない）
+- エラーが発生しても、Reactアプリケーションは正常にマウントされ、コンテンツが表示されます
+- **開発モード（`next dev`）でのみ**: Next.jsのエラーオーバーレイが表示される可能性があるため、エラーハンドラーで抑制しています
+- **本番環境（`next build` + `next start`）では**: エラーオーバーレイは表示されませんが、エラー自体は発生するため、コンソールにエラーが出力される可能性があります。エラーハンドラーは本番環境でも動作しますが、主に開発時のエラーオーバーレイを抑制するためのものです
