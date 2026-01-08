@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
 import Button from "../Button";
@@ -24,6 +25,7 @@ export default function Drawer({
     router.push("/");
     onClose();
   };
+  
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -38,7 +40,10 @@ export default function Drawer({
 
   if (!isOpen) return null;
 
-  return (
+  // Portalを使ってdocument.bodyに直接レンダリング
+  // これにより、qiankunのコンテナ外でDrawerがレンダリングされ、
+  // position: fixedが正しく動作するようになります
+  return createPortal(
     <>
       <div className={styles.overlay} onClick={onClose} aria-hidden="true" />
       <div
@@ -57,6 +62,7 @@ export default function Drawer({
           {children}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }
