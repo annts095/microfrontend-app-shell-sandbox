@@ -14,12 +14,19 @@ export default function NextQiankunPage() {
       return;
     }
 
+    // 現在のパスを取得
+    const basePath = "/next-qiankun";
+    const currentPath = window.location.pathname.replace(basePath, "");
+
     // 動的importでSSR時のエラーを回避
     import("qiankun").then((qiankun) => {
       const microApp = qiankun.loadMicroApp({
         name: "remote-next-app",
-        entry: "http://localhost:4001",
+        entry: `http://localhost:4001${currentPath}`,
         container: containerRef.current!,
+        props: {
+          basePath,
+        },
       });
 
       microAppRef.current = microApp;
